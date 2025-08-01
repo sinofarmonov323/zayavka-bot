@@ -5,7 +5,7 @@ def create_table():
         con.execute("""
             CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                used_id INTEGER UNIQUE,
+                user_id INTEGER UNIQUE,
                 username TEXT UNIQUE
             )
         """)
@@ -16,7 +16,7 @@ create_table()
 def add_user(user_id: int, username: str):
     with sqlite3.connect("users.db") as con:
         cursor = con.cursor()
-        cursor.execute("INSERT OR IGNORE INTO users (used_id, username) VALUES (?, ?)", (user_id, username))
+        cursor.execute("INSERT OR IGNORE INTO users (user_id, username) VALUES (?, ?)", (user_id, username))
         cursor.close()
 
 def get_users():
