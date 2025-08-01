@@ -1,8 +1,8 @@
 from aiogram import Bot, Dispatcher, types
-from aiogram.filters import CommandStart
+from aiogram.filters import CommandStart, Command, CommandObject
 import logging, asyncio
 from keyboards import send_buttons
-from database import add_user
+from database import add_user, get_users
 
 dp = Dispatcher()
 
@@ -16,6 +16,17 @@ async def handle_chat_join_request(event: types.ChatJoinRequest, bot: Bot):
     add_user(event.from_user.id, event.from_user.username) 
     await bot.send_photo(event.from_user.id, photo=types.FSInputFile("image.png"), caption="𝗔𝘀𝘀𝗮𝗹𝗼𝗺𝘂 𝗮𝗹𝗮𝘆𝗸𝘂𝗺😊\n\n𝗦𝗶𝘇 𝗩𝗶𝗽 𝗸𝗮𝗻𝗮𝗹 𝘃𝗮 𝗦𝗵𝗼𝗸𝗵 𝗮𝗸𝗲𝗻𝗶𝗻𝗴 𝟯𝟬𝟬𝟬$ 𝗹𝗶𝗸 𝗸𝘂𝗿𝘀𝗶𝗻𝗶 𝘆𝘂𝘁𝗶𝗯 𝗼𝗹𝗱𝗶𝗻𝗴𝗶𝘇😎\n\n𝗨𝗹𝗮𝗿𝗻𝗶 𝗾𝗼𝗹𝗴𝗮 𝗸𝗶𝗿𝗶𝘁𝗶𝘀𝗵 𝘂𝗰𝗵𝘂𝗻 𝗽𝗮𝘀𝗱𝗮𝗴𝗶 𝗧𝘂𝗴𝗺𝗮𝗹𝗮𝗿𝗱𝗮𝗻 𝗳𝗼𝘆𝗱𝗮𝗹𝗮𝗻𝗶𝗻𝗴👇", reply_markup=(send_buttons("https://t.me/+ZeVl1BrIZWo0NmEy", "https://t.me/+ki3LHeP7FStlMmUy")))
     # await event.approve() # bu kod foydalanuvchi zayavka tashalasa avtomatik qabul qiladi1
+
+@dp.message(Command("m"))
+async def send_message_to_users(message: types.Message, bot: Bot, command: CommandObject):
+    args = command.args
+    print(f"args: {args}")
+    print(f"users: {get_users()}")
+    if args != None:
+        for user in get_users():
+            await bot.send_message(user['user_id'], args)
+    else:
+        await message.answer("ishlatish: /m [xabar]")
 
 @dp.message()
 async def handle(message: types.Message):

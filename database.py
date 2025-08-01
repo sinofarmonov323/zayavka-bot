@@ -18,3 +18,11 @@ def add_user(user_id: int, username: str):
         cursor = con.cursor()
         cursor.execute("INSERT OR IGNORE INTO users (used_id, username) VALUES (?, ?)", (user_id, username))
         cursor.close()
+
+def get_users():
+    with sqlite3.connect("users.db") as con:
+        con.row_factory = sqlite3.Row
+        cur = con.cursor()
+        cur.execute("SELECT * FROM users")
+        data = cur.fetchall()
+        return [dict(row) for row in data]
