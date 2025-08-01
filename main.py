@@ -8,7 +8,7 @@ from aiogram.fsm.state import State, StatesGroup
 
 dp = Dispatcher()
 
-ADMIN_ID = 7077167971
+ADMIN_ID = 5020353042
 
 class AdminStates(StatesGroup):
     send_message = State()
