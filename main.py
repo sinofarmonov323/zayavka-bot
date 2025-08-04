@@ -67,7 +67,7 @@ async def handle(message: types.Message):
     print(f"{message.from_user.username} - {message.text}\n{message}")
 
 async def main():
-    bot = Bot("8106975001:AAHWecNEvO3WoRs1jSIbww5unKbTePV0Pkw")
+    bot = Bot("token")
     await dp.start_polling(bot)
 
 
